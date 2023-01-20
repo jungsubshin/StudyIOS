@@ -1,15 +1,12 @@
 
 import Foundation
 
-//MARK: - 네트워크에서 발생할 수 있는 에러 정의
 
 enum NetworkError: Error {
     case networkingError
     case dataError
     case parseError
 }
-
-//MARK: - Networking (서버와 통신하는) 클래스 모델
 
 final class NetworkManager {
     
@@ -19,11 +16,11 @@ final class NetworkManager {
     private init() {}
     
     var url = "https://external-api.news.infoseek.co.jp/news/link/v2/genre-tabs/all/articles"
-    var gunosyUrl = "https://external-api.news.infoseek.co.jp/news/link/v1/all/articles"
+    //var url = "https://stg.gateway-api.rakuten.co.jp/news/link/v2/genre-tabs/all/articles"
+    //var url = "https://external-api.news.infoseek.co.jp/news/link/v1/all/articles"
     
     typealias NetworkCompletion = (Result<[Article], NetworkError>) -> Void
 
-    // 네트워킹 요청하는 함수 (음악데이터 가져오기)
     func fetchArticles(genre: String, page: Int, completion: @escaping NetworkCompletion) {
         performRequest(with: url + "?page=" + String(page)) { result in
             completion(result)
@@ -38,7 +35,6 @@ final class NetworkManager {
                 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        //request.setValue("API-Access-Token", forHTTPHeaderField: "App")
         request.allHTTPHeaderFields = ["API-Access-Token": "App"]
 //        request.allHTTPHeaderFields = ["X-DEVICE-APP-VERSION": "1"]
 //        request.allHTTPHeaderFields = ["X-DEVICE-BUNDLE-IDENTIFIER": "test"]
